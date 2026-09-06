@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,13 @@ export function GymLog() {
   const { data, isLoading, updateGymSession } = useDailyData();
   const [routine, setRoutine] = useState(data?.gym_session?.routine || '');
   const [exercises, setExercises] = useState<any[]>(data?.gym_session?.exercises || []);
+
+  useEffect(() => {
+    if (data?.gym_session) {
+      setRoutine(data.gym_session.routine || '');
+      setExercises(data.gym_session.exercises || []);
+    }
+  }, [data?.gym_session]);
   
   const [newExercise, setNewExercise] = useState('');
   const [newWeight, setNewWeight] = useState('');

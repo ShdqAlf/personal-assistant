@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,12 @@ export function QuickLogs() {
   const [category, setCategory] = useState('');
   const [note, setNote] = useState('');
   const [journal, setJournal] = useState(data?.notes || '');
+
+  useEffect(() => {
+    if (data?.notes !== undefined) {
+      setJournal(data.notes);
+    }
+  }, [data?.notes]);
 
   if (isLoading) return <div className="p-4 text-center">Loading...</div>;
 

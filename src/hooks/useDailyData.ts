@@ -51,7 +51,6 @@ export function useDailyData(date: Date = new Date()) {
       const { error } = await supabase
         .from('daily_logs')
         .upsert({
-          id: newData.id, // Will be undefined on first insert, Supabase handles uuid generation if configured or we can rely on unique (user_id, date) if id is not required
           user_id: user.id,
           date: newData.date,
           attendance: newData.attendance,
@@ -59,7 +58,7 @@ export function useDailyData(date: Date = new Date()) {
           gym_session: newData.gym_session,
           expenses: newData.expenses,
           notes: newData.notes,
-        }, { onConflict: 'user_id, date' }); // Upsert matching user_id and date
+        }, { onConflict: 'user_id,date' });
         
       if (error) throw error;
     } catch (e) {
